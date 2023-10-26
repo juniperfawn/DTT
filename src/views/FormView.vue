@@ -1,14 +1,14 @@
 <template>
-    <About />
+    <Form />
   </template>
   
   <script>
-  import About from '@/components/About.vue';
+  import Form from '@/components/Form.vue';
   
   export default {
-    name: 'AboutView',
+    name: 'FormView',
     components: {
-      About
+      Form
     }
   }
   </script>
