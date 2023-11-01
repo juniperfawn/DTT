@@ -21,9 +21,10 @@ const routes = [
     component: FormView,
   },
   {
-    path: "/listing",
-    name: "listing",
+    path: "/listing/:listingId",
+    name: "byListing",
     component: ListingView,
+    props: true,
   },
 ];
 

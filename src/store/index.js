@@ -2,66 +2,97 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
-    user: {
-      streetName: "",
-      // houseNumber: "",
-      // addition: "",
-      // postalCode: "",
-      // city: "",
-      // picture: "",
-      // price: "",
-      // size: "",
-      // garage: "select",
-      // bedrooms: "",
-      // bathrooms: "",
-      // constructionDate: "",
-      // description: "",
-    },
+    formData: "",
     userMadeProperties: [
       {
         streetName: "Jan Evertsenplaats",
-        // houseNumber: 98,
-        // price: 790.0,
-        // postalCode: "3012HS",
-        // city: "Rotterdam",
-        // bedrooms: 2,
-        // bathrooms: 1,
-        // size: 100,
+        houseNumber: "98",
+        price: 790.0,
+        postalCode: "3012HS",
+        city: "Rotterdam",
+        bedrooms: 2,
+        bathrooms: 1,
+        size: 100,
+        id: 1,
       },
       {
         streetName: "Bergselaan",
-        // houseNumber: 157,
-        // price: 590.0,
-        // postalCode: "3037BJ",
-        // city: "Rotterdam",
-        // bedrooms: 4,
-        // bathrooms: 2,
-        // size: 400,
+        houseNumber: "157",
+        price: 590.0,
+        postalCode: "3037BJ",
+        city: "Rotterdam",
+        bedrooms: 4,
+        bathrooms: 2,
+        size: 400,
+        id: 2,
+      },
+      {
+        streetName: "Vista Drive",
+        houseNumber: "275",
+        price: 50000,
+        postalCode: "81601",
+        city: "Glenwood Springs",
+        bedrooms: 4,
+        bathrooms: 4,
+        size: 50,
+        id: 3,
       },
     ],
     preGeneratedProperties: [],
+    isPriceAscending: true,
+    isSizeAscending: false,
   },
-  getters: {},
+  getters: {
+    getListingById: (state) => (id) => {
+      let foundListing = state.userMadeProperties.find((item) => {
+        if (item.id == id) {
+          return item;
+        }
+      });
+      return foundListing;
+    },
+  },
   mutations: {
-    handleSubmit(state) {
-      console.log("submitted");
-      // state.userMadeProperties.push(state.user);
-      // state.user.streetName = "";
-      // state.user.houseNumber = "";
-      // state.user.addition = "";
-      // state.user.postalCode = "";
-      // state.user.city = "";
-      // state.user.picture = "";
-      // state.user.price = "";
-      // state.user.streetName = "";
+    setFormData(state, data) {
+      data.id = state.userMadeProperties.length + 1; // Generate a unique ID
+      state.userMadeProperties.push(data);
     },
-    updateStreetName(state, streetName) {
-      state.streetName = streetName;
+    sortByPrice(state) {
+      if (state.isPriceAscending) {
+        state.userMadeProperties.sort((a, b) => a.price - b.price);
+        state.isPriceAscending = !state.isPriceAscending;
+      } else {
+        state.userMadeProperties.sort((a, b) => b.price - a.price);
+        state.isPriceAscending = !state.isPriceAscending;
+      }
     },
-    updateUser(state, field) {
-      state.user.field = field.value;
+    sortBySize(state) {
+      if (state.isSizeAscending) {
+        state.userMadeProperties.sort((a, b) => a.size - b.size);
+        state.isSizeAscending = !state.isSizeAscending;
+      } else {
+        state.userMadeProperties.sort((a, b) => b.size - a.size);
+        state.isSizeAscending = !state.isSizeAscending;
+      }
+    },
+    deleteListing(state, itemToDelete) {
+      console.log("I made it to delete listing");
+      console.log("itemToDelete is " + itemToDelete);
+      const index = state.userMadeProperties.findIndex(
+        (item) => item.id === itemToDelete
+      );
+      if (index !== -1) {
+        state.userMadeProperties.splice(index, 1);
+      }
     },
   },
-  actions: {},
+  actions: {
+    sortByPrice({ commit }) {
+      commit("sortByPrice");
+    },
+    sortBySize({ commit }) {
+      commit("sortBySize");
+    },
+  },
   modules: {},
 });
