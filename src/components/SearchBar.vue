@@ -17,7 +17,12 @@
       <div class="inputContainer">
         <img class="inputSearch__loupe" src="../assets/ic_search@3x.png" />
         <img class="inputSearch__x" src="../assets/ic_clear@3x.png" />
-        <input type="search" placeholder="search for a house" />
+        <input
+          type="search"
+          placeholder="search for a house"
+          v-model="searchQuery"
+          @input="sortBySearch(searchQuery)"
+        />
       </div>
       <div class="filterButtons">
         <button class="btn__filterPrice" @click="sortByPrice">Price</button>
@@ -28,11 +33,22 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 export default {
   name: "SearchBar",
+  data() {
+    return {
+      searchQuery: "",
+    };
+  },
+  computed: {
+    ...mapState(["userMadeProperties", "searchQuery"]),
+  },
   methods: {
     ...mapActions(["sortByPrice", "sortBySize"]),
+    sortBySearch(searchQuery) {
+      this.$store.commit("sortBySearch", searchQuery);
+    },
   },
 };
 </script>

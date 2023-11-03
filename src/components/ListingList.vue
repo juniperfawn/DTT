@@ -1,9 +1,8 @@
 <template>
-  <!-- go through both arrays userMadeProperties & preGeneratedProperties should have same data. Add true or false for editable -->
   <div
     class="listOfCards"
-    v-for="item in $store.state.userMadeProperties"
-    :key="$store.state.userMadeProperties.id"
+    v-for="item in $store.state.displayedProperties"
+    :key="$store.state.displayedProperties.id"
   >
     <ListingCard
       :streetName="item.streetName"
@@ -26,6 +25,10 @@ export default {
   components: {
     ListingCard,
   },
+  mounted() {
+    this.$store.state.displayedProperties =
+      this.$store.state.userMadeProperties;
+  },
 };
 </script>
 
@@ -40,7 +43,7 @@ export default {
 @media (max-width: 750px) {
   .listOfCards {
     margin: 0px;
-    padding: 0px 20px 80px 20px;
+    padding: 0px 20px 10px 20px;
   }
 }
 </style>

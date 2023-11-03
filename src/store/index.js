@@ -13,6 +13,8 @@ export default createStore({
         bedrooms: 2,
         bathrooms: 1,
         size: 100,
+        description:
+          "This charming A-frame cabin, nestled in the Rocky Mountains, offers a warm retreat with a rustic exterior, stone fireplace, and stunning views. Perfect for nature lovers and family getaways, it's surrounded by hiking trails and a peaceful stream.",
         id: 1,
       },
       {
@@ -24,6 +26,8 @@ export default createStore({
         bedrooms: 4,
         bathrooms: 2,
         size: 400,
+        description:
+          "This sleek urban home in the city center features contemporary design, a rooftop terrace with city views, and smart home technology for modern living and entertainment.",
         id: 2,
       },
       {
@@ -35,10 +39,12 @@ export default createStore({
         bedrooms: 4,
         bathrooms: 4,
         size: 50,
+        description:
+          "Impeccably preserved, this Victorian gem on a tree-lined street boasts ornate woodwork, stained glass windows, and an enchanting garden, offering a glimpse into a bygone era.",
         id: 3,
       },
     ],
-    preGeneratedProperties: [],
+    displayedProperties: [],
     isPriceAscending: true,
     isSizeAscending: false,
   },
@@ -53,37 +59,46 @@ export default createStore({
     },
   },
   mutations: {
+    setDisplayProperties(state) {
+      state.displayedProperties = state.userMadeProperties;
+    },
     setFormData(state, data) {
       data.id = state.userMadeProperties.length + 1; // Generate a unique ID
       state.userMadeProperties.push(data);
+      state.displayedProperties = state.userMadeProperties;
     },
     sortByPrice(state) {
       if (state.isPriceAscending) {
-        state.userMadeProperties.sort((a, b) => a.price - b.price);
+        state.displayedProperties.sort((a, b) => a.price - b.price);
         state.isPriceAscending = !state.isPriceAscending;
       } else {
-        state.userMadeProperties.sort((a, b) => b.price - a.price);
+        state.displayedProperties.sort((a, b) => b.price - a.price);
         state.isPriceAscending = !state.isPriceAscending;
       }
     },
     sortBySize(state) {
       if (state.isSizeAscending) {
-        state.userMadeProperties.sort((a, b) => a.size - b.size);
+        state.displayedProperties.sort((a, b) => a.size - b.size);
         state.isSizeAscending = !state.isSizeAscending;
       } else {
-        state.userMadeProperties.sort((a, b) => b.size - a.size);
+        state.displayedProperties.sort((a, b) => b.size - a.size);
         state.isSizeAscending = !state.isSizeAscending;
       }
     },
     deleteListing(state, itemToDelete) {
-      console.log("I made it to delete listing");
-      console.log("itemToDelete is " + itemToDelete);
       const index = state.userMadeProperties.findIndex(
         (item) => item.id === itemToDelete
       );
       if (index !== -1) {
         state.userMadeProperties.splice(index, 1);
       }
+      state.displayedProperties = state.userMadeProperties;
+    },
+    sortBySearch(state, searchQuery) {
+      const query = searchQuery.toLowerCase();
+      state.displayedProperties = state.userMadeProperties.filter((listing) => {
+        return listing.streetName.toLowerCase().includes(query);
+      });
     },
   },
   actions: {
@@ -92,6 +107,9 @@ export default createStore({
     },
     sortBySize({ commit }) {
       commit("sortBySize");
+    },
+    sortBySearch({ commit }) {
+      commit("sortBySearch");
     },
   },
   modules: {},

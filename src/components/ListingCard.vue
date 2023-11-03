@@ -1,35 +1,4 @@
 <template>
-  <!-- <div class="listingCard__wrapper">
-            <router-link class="listingCard" :to="{ name: 'listing' }">
-                <div class="imgWrapper">
-                        <img src="../assets/img_placeholder_house@3x.png" />
-                </div>
-                <div class="listingCard__information">
-                    <h2 class="listingCard--address">Stokvisstraat 123</h2>
-                    <p class="listingCard--price">€ 500.000</p>
-                    <p class="listingCard--zipcode">1011AA Amsterdam</p>
-                    <div class="propertyDetails">
-                        <div class="propertyDetails__bedrooms">
-                        <p>1</p> 
-                        <img src="../assets/ic_bed@3x.png" />
-                        </div>
-                        <div class="propertyDetails__bathrooms">
-                        <p>1</p> 
-                        <img src="../assets/ic_bath@3x.png" />
-                        </div>
-                        <div class="propertyDetails__size">
-                            <p>120 m2</p>
-                        <img src="../assets/ic_size@3x.png" />
-                        </div>
-                    </div>
-                </div>
-            </router-link>
-        <div class="listingCard__edit">
-            <img src="../assets/ic_edit@3x.png" />
-            <img src="../assets/ic_delete@3x.png" />
-        </div>
-    </div> -->
-
   <div class="listingCard__wrapper">
     <router-link
       class="listingCard"

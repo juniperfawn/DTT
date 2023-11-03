@@ -188,7 +188,7 @@ export default {
   },
   methods: {
     handleSubmit() {
-      alert("I submitted!!");
+      // alert("I submitted!!");
       this.$store.commit("setFormData", this.formData);
     },
   },

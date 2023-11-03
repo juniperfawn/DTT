@@ -60,11 +60,7 @@
         </div>
       </div>
       <p class="listingDescription">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis a purus in
-        diam ornare luctus eget vel erat. Sed porta leo ex, eget aliquam erat
-        luctus vel. Pellentesque pellentesque orci ut augue euismod scelerisque.
-        Quisque vestibulum faucibus blandit. Suspendisse et augue sit amet
-        lectus fringilla tincidunt ut vel massa.
+        {{ listingById(listingId).description }}
       </p>
     </div>
   </div>
