@@ -28,7 +28,9 @@
       </div>
     </router-link>
     <div class="listingCard__edit">
-      <img src="../assets/ic_edit@3x.png" />
+      <router-link :to="{ name: 'edit', params: { listingId: listingId } }">
+        <img src="../assets/ic_edit@3x.png" />
+      </router-link>
       <img src="../assets/ic_delete@3x.png" @click="deleteListing(listingId)" />
     </div>
   </div>

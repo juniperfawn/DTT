@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import AboutView from "../views/AboutView";
 import FormView from "../views/FormView";
+import EditView from "../views/EditView";
 import ListingView from "../views/ListingView";
 
 const routes = [
@@ -24,6 +25,12 @@ const routes = [
     path: "/listing/:listingId",
     name: "byListing",
     component: ListingView,
+    props: true,
+  },
+  {
+    path: "/edit/:listingId",
+    name: "edit",
+    component: EditView,
     props: true,
   },
 ];

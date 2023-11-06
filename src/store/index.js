@@ -13,9 +13,10 @@ export default createStore({
         bedrooms: 2,
         bathrooms: 1,
         size: 100,
+        constructionDate: 1990,
         description:
           "This charming A-frame cabin, nestled in the Rocky Mountains, offers a warm retreat with a rustic exterior, stone fireplace, and stunning views. Perfect for nature lovers and family getaways, it's surrounded by hiking trails and a peaceful stream.",
-        id: 1,
+        id: 0,
       },
       {
         streetName: "Bergselaan",
@@ -26,9 +27,10 @@ export default createStore({
         bedrooms: 4,
         bathrooms: 2,
         size: 400,
+        constructionDate: 1990,
         description:
           "This sleek urban home in the city center features contemporary design, a rooftop terrace with city views, and smart home technology for modern living and entertainment.",
-        id: 2,
+        id: 1,
       },
       {
         streetName: "Vista Drive",
@@ -39,9 +41,10 @@ export default createStore({
         bedrooms: 4,
         bathrooms: 4,
         size: 50,
+        constructionDate: 1990,
         description:
           "Impeccably preserved, this Victorian gem on a tree-lined street boasts ornate woodwork, stained glass windows, and an enchanting garden, offering a glimpse into a bygone era.",
-        id: 3,
+        id: 2,
       },
     ],
     displayedProperties: [],
@@ -65,6 +68,10 @@ export default createStore({
     setFormData(state, data) {
       data.id = state.userMadeProperties.length + 1; // Generate a unique ID
       state.userMadeProperties.push(data);
+      state.displayedProperties = state.userMadeProperties;
+    },
+    setEditedData(state, data) {
+      state.userMadeProperties[data.listingId] = data.formData;
       state.displayedProperties = state.userMadeProperties;
     },
     sortByPrice(state) {
@@ -91,6 +98,9 @@ export default createStore({
       );
       if (index !== -1) {
         state.userMadeProperties.splice(index, 1);
+      }
+      for (let i = 0; i < state.userMadeProperties.length; i++) {
+        state.userMadeProperties[i].id = i;
       }
       state.displayedProperties = state.userMadeProperties;
     },

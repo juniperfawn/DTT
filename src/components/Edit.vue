@@ -6,11 +6,11 @@
         <router-link :to="{ name: 'home' }">
           <img class="btn__back--mobile" src="../assets/ic_back_grey@3x.png" />
         </router-link>
-        <h1>Create new listing</h1>
+        <h1>Edit listing</h1>
         <div></div>
       </div>
-      <h1 class="showOnlyDesktop">Create new listing</h1>
-      <form @submit.prevent="handleSubmit">
+      <h1 class="showOnlyDesktop">Edit Listing</h1>
+      <form @submit.prevent="handleSave">
         <label for="streetName">Street name*</label><br />
         <input
           type="text"
@@ -66,12 +66,12 @@
         /><br />
 
         <!-- <div class="uploadFileWrapper">
-          <label for="picture">Upload picture (PNG or JPG)*</label><br />
-          <div class="uploadImgWrapper">
-            <img src="../assets/ic_upload@3x.png" />
-          </div>
-          <input type="file" id="picture" name="picture" required />
-        </div> -->
+            <label for="picture">Upload picture (PNG or JPG)*</label><br />
+            <div class="uploadImgWrapper">
+              <img src="../assets/ic_upload@3x.png" />
+            </div>
+            <input type="file" id="picture" name="picture" required />
+          </div> -->
 
         <label for="price">Price*</label><br />
         <input
@@ -96,13 +96,13 @@
             />
           </div>
           <!-- <div>
-            <label for="garage">Garage*</label><br />
-            <select id="garage" name="garage" required v-model="garage">
-              <option value="select">Select</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-          </div> -->
+              <label for="garage">Garage*</label><br />
+              <select id="garage" name="garage" required v-model="garage">
+                <option value="select">Select</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div> -->
         </div>
 
         <div class="form--groupThree">
@@ -150,8 +150,7 @@
           required
           v-model="formData.description"
         ></textarea>
-
-        <button type="submit">POST</button>
+        <button type="submit">SAVE</button>
       </form>
     </div>
   </div>
@@ -159,35 +158,60 @@
 
 <script>
 import OverviewBtn from "./OverviewBtn.vue";
+import { mapGetters } from "vuex";
 export default {
   name: "Form",
   components: {
     OverviewBtn,
   },
+  props: {
+    listingId: Number,
+  },
   data() {
+    let listing = this.$store.state.userMadeProperties[this.listingId];
     return {
       formData: {
-        streetName: "",
-        houseNumber: "",
-        addition: "",
-        houseNumber: "",
-        addition: "",
-        postalCode: "",
-        city: "",
+        streetName: listing.streetName,
+        houseNumber: listing.houseNumber,
+        addition: listing.addition,
+        postalCode: listing.postalCode,
+        city: listing.city,
         // picture: '',
-        price: "",
-        size: "",
+        price: listing.price,
+        size: listing.size,
         // garage: 'select',
-        bedrooms: "",
-        bathrooms: "",
-        constructionDate: "",
-        description: "",
+        bedrooms: listing.bedrooms,
+        bathrooms: listing.bathrooms,
+        constructionDate: listing.constructionDate,
+        description: listing.description,
+        id: +this.listingId,
       },
     };
   },
   methods: {
-    handleSubmit() {
-      this.$store.commit("setFormData", this.formData);
+    handleSave() {
+      new Promise((resolve, reject) => {
+        this.$store.commit("setEditedData", {
+          formData: this.formData,
+          listingId: +this.listingId,
+        });
+
+        resolve();
+      })
+        .then(() => {
+          this.$router.push({
+            path: "/listing/" + this.listingId,
+          });
+        })
+        .catch((error) => {
+          alert("your listing data wasn't saved. Try again.");
+        });
+    },
+    computed: {
+      ...mapGetters(["getListingById"]),
+      listingById() {
+        return (listingId) => this.getListingById(listingId);
+      },
     },
   },
 };
@@ -382,11 +406,11 @@ button {
   }
 
   /* .btn__back--mobile{
-        height: 20px;
-        position: absolute;
-        top: 30px;
-        left: 30px;
-    } */
+          height: 20px;
+          position: absolute;
+          top: 30px;
+          left: 30px;
+      } */
 
   .form__header--mobile {
     display: flex;
