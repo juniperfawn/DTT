@@ -16,7 +16,11 @@
     <div class="searchBar__bottomWrapper">
       <div class="inputContainer">
         <img class="inputSearch__loupe" src="../assets/ic_search@3x.png" />
-        <img class="inputSearch__x" src="../assets/ic_clear@3x.png" />
+        <img
+          v-if="showX"
+          class="inputSearch__x"
+          src="../assets/ic_clear@3x.png"
+        />
         <input
           type="search"
           placeholder="search for a house"
@@ -42,7 +46,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["userMadeProperties", "searchQuery"]),
+    ...mapState(["userMadeProperties", "searchQuery", "showX"]),
   },
   methods: {
     ...mapActions(["sortByPrice", "sortBySize"]),

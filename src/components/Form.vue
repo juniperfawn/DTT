@@ -65,13 +65,20 @@
           v-model="formData.city"
         /><br />
 
-        <!-- <div class="uploadFileWrapper">
+        <div class="uploadFileWrapper">
           <label for="picture">Upload picture (PNG or JPG)*</label><br />
           <div class="uploadImgWrapper">
             <img src="../assets/ic_upload@3x.png" />
           </div>
-          <input type="file" id="picture" name="picture" required />
-        </div> -->
+          <input
+            @change="handleImageChange"
+            type="file"
+            accept="image/*"
+            id="picture"
+            name="picture"
+            required
+          />
+        </div>
 
         <label for="price">Price*</label><br />
         <input
@@ -95,14 +102,13 @@
               v-model="formData.size"
             />
           </div>
-          <!-- <div>
+          <div>
             <label for="garage">Garage*</label><br />
             <select id="garage" name="garage" required v-model="garage">
-              <option value="select">Select</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
             </select>
-          </div> -->
+          </div>
         </div>
 
         <div class="form--groupThree">
@@ -174,20 +180,58 @@ export default {
         addition: "",
         postalCode: "",
         city: "",
-        // picture: '',
+        picture: null,
         price: "",
         size: "",
-        // garage: 'select',
+        garage: "No",
         bedrooms: "",
         bathrooms: "",
         constructionDate: "",
         description: "",
+        isUserMade: true,
+        anything: "",
       },
     };
   },
   methods: {
     handleSubmit() {
-      this.$store.commit("setFormData", this.formData);
+      new Promise((resolve, reject) => {
+        this.$store.commit("setFormData", this.formData);
+        console.log(this.formData);
+        console.log(typeof this.formData.picture);
+        let id = this.$store.state.userMadeProperties.length - 1;
+        resolve(id);
+      })
+        .then((id) => {
+          this.$router.push({
+            path: "/listing/" + id,
+          });
+        })
+        .catch((error) => {
+          alert("your listing data wasn't saved. Try again.");
+        });
+    },
+    handleImageChange(event) {
+      let file = event.target.files[0];
+      if (file) {
+        new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            resolve(e.target.result);
+          };
+          reader.onerror = (e) => {
+            reject(e.error);
+          };
+          console.log("here for readAsDataURL");
+          reader.readAsDataURL(file);
+        })
+          .then((dataURL) => {
+            this.picture = dataURL;
+          })
+          .catch((error) => {
+            alert("your photo wasn't uploaded.");
+          });
+      }
     },
   },
 };

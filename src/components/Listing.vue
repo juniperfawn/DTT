@@ -1,8 +1,9 @@
 <template>
+  <DeleteListing :listingId="+listingId" />
   <OverviewBtn class="showOnlyDesktop" />
   <div class="listingCard__large">
     <div class="house__imgWrapper">
-      <img src="../assets/img_placeholder_house@3x.png" />
+      <img :src="listingById(listingId).picture" />
     </div>
 
     <div class="mobile__wrapper showOnlyMobile">
@@ -14,16 +15,34 @@
               src="../assets/ic_back_white@3x.png"
             />
           </router-link>
-          <div class="listing__edit--mobile">
-            <img src="../assets/ic_edit_white@3x.png" />
-            <img src="../assets/ic_delete_white@3x.png" />
+          <div
+            v-if="listingById(listingId).isUserMade"
+            class="listing__edit--mobile"
+          >
+            <router-link
+              :to="{ name: 'edit', params: { listingId: listingId } }"
+            >
+              <img src="../assets/ic_edit_white@3x.png" />
+            </router-link>
+            <img src="../assets/ic_delete_white@3x.png" @click="setShowModal" />
           </div>
         </div>
       </div>
     </div>
 
     <div class="listingInfo__wrapper">
-      <h1>{{ listingById(listingId).streetName }}</h1>
+      <div class="listing__topElements">
+        <h1>{{ listingById(listingId).streetName }}</h1>
+        <div
+          v-if="listingById(listingId).isUserMade"
+          class="listingCard__edit showOnlyDesktop"
+        >
+          <router-link :to="{ name: 'edit', params: { listingId: listingId } }">
+            <img src="../assets/ic_edit@3x.png" />
+          </router-link>
+          <img src="../assets/ic_delete@3x.png" @click="setShowModal" />
+        </div>
+      </div>
       <div class="listing--address">
         <img src="../assets/ic_location@3x.png" />
         <p>
@@ -56,7 +75,7 @@
         </div>
         <div class="propertyDetails--garage">
           <img src="../assets/ic_garage@3x.png" />
-          <p>Yes</p>
+          <p>{{ listingById(listingId).garage }}</p>
         </div>
       </div>
       <p class="listingDescription">
@@ -68,20 +87,25 @@
 
 <script>
 import OverviewBtn from "./OverviewBtn.vue";
-import { mapGetters } from "vuex";
+import DeleteListing from "./DeleteListing.vue";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "Listing",
   components: {
     OverviewBtn,
+    DeleteListing,
   },
   props: {
-    listingId: String,
+    listingId: Number,
   },
   computed: {
     ...mapGetters(["getListingById"]),
     listingById() {
       return (listingId) => this.getListingById(listingId);
     },
+  },
+  methods: {
+    ...mapMutations(["setShowModal"]),
   },
 };
 </script>
@@ -90,6 +114,12 @@ export default {
 /*shows elements only for desktop view and hides elements for mobile view*/
 .showOnlyMobile {
   display: none;
+}
+.listing__topElements {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: red; */
 }
 .listingCard__large {
   margin-left: 350px;
@@ -146,10 +176,19 @@ export default {
 }
 
 .listingDescription {
-  padding: 10px 30px 30px 30px;
+  padding: 20px 30px 30px 0px;
   font-size: 12px;
   color: #4a4b4c;
   line-height: 1.2rem;
+}
+
+.listingCard__edit img {
+  height: 15px;
+}
+
+.listingCard__edit {
+  display: flex;
+  gap: 20px;
 }
 
 @media (max-width: 750px) {
@@ -203,6 +242,7 @@ export default {
     top: 300px;
     left: 0;
     height: 100%;
+    /* width: 355px; */
   }
   .listingInfo__wrapper .listingDescription {
     padding: 10px 0px 0px 0px;

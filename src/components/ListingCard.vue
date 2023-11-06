@@ -1,11 +1,13 @@
 <template>
+  <DeleteListing :listingId="listingId" />
   <div class="listingCard__wrapper">
     <router-link
       class="listingCard"
       :to="{ name: 'byListing', params: { listingId: listingId } }"
     >
       <div class="imgWrapper">
-        <img src="../assets/img_placeholder_house@3x.png" />
+        <!-- <img src="../assets/img_placeholder_house@3x.png" /> -->
+        <img :src="picture" />
       </div>
       <div class="listingCard__information">
         <h2 class="listingCard--address">{{ streetName }} {{ houseNumber }}</h2>
@@ -27,17 +29,21 @@
         </div>
       </div>
     </router-link>
-    <div class="listingCard__edit">
+    <div v-if="isUserMade" class="listingCard__edit">
       <router-link :to="{ name: 'edit', params: { listingId: listingId } }">
         <img src="../assets/ic_edit@3x.png" />
       </router-link>
-      <img src="../assets/ic_delete@3x.png" @click="deleteListing(listingId)" />
+      <img src="../assets/ic_delete@3x.png" @click="setShowModal" />
     </div>
   </div>
 </template>
 
 <script>
+import DeleteListing from "./DeleteListing.vue";
+import { mapMutations } from "vuex";
 export default {
+  name: "ListingCard",
+  components: { DeleteListing },
   props: {
     streetName: String,
     houseNumber: String,
@@ -48,12 +54,11 @@ export default {
     bathrooms: Number,
     size: Number,
     listingId: Number,
+    picture: String,
+    isUserMade: Boolean,
   },
-  name: "ListingCard",
   methods: {
-    deleteListing(listingId) {
-      this.$store.commit("deleteListing", listingId);
-    },
+    ...mapMutations(["setShowModal"]),
   },
 };
 </script>

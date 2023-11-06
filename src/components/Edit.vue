@@ -65,13 +65,13 @@
           v-model="formData.city"
         /><br />
 
-        <!-- <div class="uploadFileWrapper">
-            <label for="picture">Upload picture (PNG or JPG)*</label><br />
-            <div class="uploadImgWrapper">
-              <img src="../assets/ic_upload@3x.png" />
-            </div>
-            <input type="file" id="picture" name="picture" required />
-          </div> -->
+        <div class="uploadFileWrapper">
+          <label for="picture">Upload picture (PNG or JPG)*</label><br />
+          <div class="uploadImgWrapper">
+            <img src="../assets/ic_upload@3x.png" />
+          </div>
+          <input type="file" id="picture" name="picture" required />
+        </div>
 
         <label for="price">Price*</label><br />
         <input
@@ -95,14 +95,13 @@
               v-model="formData.size"
             />
           </div>
-          <!-- <div>
-              <label for="garage">Garage*</label><br />
-              <select id="garage" name="garage" required v-model="garage">
-                <option value="select">Select</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-              </select>
-            </div> -->
+          <div>
+            <label for="garage">Garage*</label><br />
+            <select id="garage" name="garage" required v-model="garage">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
         </div>
 
         <div class="form--groupThree">
@@ -176,15 +175,16 @@ export default {
         addition: listing.addition,
         postalCode: listing.postalCode,
         city: listing.city,
-        // picture: '',
+        picture: listing.picture,
         price: listing.price,
         size: listing.size,
-        // garage: 'select',
+        garage: listing.garage,
         bedrooms: listing.bedrooms,
         bathrooms: listing.bathrooms,
         constructionDate: listing.constructionDate,
         description: listing.description,
         id: +this.listingId,
+        isUserMade: true,
       },
     };
   },
