@@ -218,6 +218,11 @@ export default {
 </script>
 
 <style scoped>
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 /*shows elements only for desktop view and hides elements for mobile view*/
 .showOnlyMobile {
   display: none;
@@ -272,6 +277,14 @@ input[placeholder] {
 
 input[type="text"]:focus {
   border: 1.5px solid #eb5440;
+}
+
+#description {
+  color: #c3c3c3;
+}
+
+#garage {
+  color: #c3c3c3;
 }
 
 /*upload photo styling*/
@@ -365,6 +378,10 @@ button {
   margin-bottom: 20px;
 }
 
+input:invalid ~ button {
+  opacity: 0.5;
+}
+
 /*error styles*/
 .error {
   color: #eb5440;
@@ -382,13 +399,6 @@ button {
     display: block;
   }
 
-  /*resetting box sizing*/
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-
   .showOnlyMobile {
     display: none;
   }
@@ -402,22 +412,13 @@ button {
     padding: 30px;
     max-width: 100%;
     margin-bottom: 40px;
-    /* position: relative; */
   }
-
-  /* .btn__back--mobile{
-          height: 20px;
-          position: absolute;
-          top: 30px;
-          left: 30px;
-      } */
 
   .form__header--mobile {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-bottom: 10px;
-    /* display: none; */
   }
 
   .btn__back--mobile {

@@ -10,6 +10,8 @@
         <div></div>
       </div>
       <h1 class="showOnlyDesktop">Create new listing</h1>
+      <h1>{{ formData.streetName }}</h1>
+      <h1>{{ formData.picture }}</h1>
       <form @submit.prevent="handleSubmit">
         <label for="streetName">Street name*</label><br />
         <input
@@ -25,7 +27,7 @@
           <div>
             <label for="houseNumber">House number*</label><br />
             <input
-              type="text"
+              type="number"
               id="houseNumber"
               name="houseNumber"
               placeholder="Enter house number"
@@ -71,18 +73,17 @@
             <img src="../assets/ic_upload@3x.png" />
           </div>
           <input
-            @change="handleImageChange"
             type="file"
-            accept="image/*"
             id="picture"
             name="picture"
+            @change="onFileChange"
             required
           />
         </div>
 
         <label for="price">Price*</label><br />
         <input
-          type="text"
+          type="number"
           id="price"
           name="price"
           placeholder="e.g. €150.000"
@@ -94,7 +95,7 @@
           <div>
             <label for="size">Size*</label><br />
             <input
-              type="text"
+              type="number"
               id="size"
               name="size"
               placeholder="e.g. 60m2"
@@ -105,6 +106,7 @@
           <div>
             <label for="garage">Garage*</label><br />
             <select id="garage" name="garage" required v-model="garage">
+              <option value="select" disabled hidden selected>Select</option>
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
@@ -115,7 +117,7 @@
           <div>
             <label for="bedrooms">Bedrooms*</label><br />
             <input
-              type="text"
+              type="number"
               id="bedrooms"
               name="bedrooms"
               placeholder="Enter amount"
@@ -126,7 +128,7 @@
           <div>
             <label for="bathrooms">Bathrooms*</label><br />
             <input
-              type="text"
+              type="number"
               id="bathrooms"
               name="bathrooms"
               placeholder="Enter amount"
@@ -138,7 +140,7 @@
 
         <label for="constructionDate">Construction date*</label><br />
         <input
-          type="text"
+          type="number"
           id="constructionDate"
           name="constructionDate"
           placeholder="e.g. 1990"
@@ -148,6 +150,7 @@
 
         <label for="description">Description*</label><br />
         <textarea
+          type="text"
           id="description"
           name="description"
           rows="5"
@@ -172,33 +175,44 @@ export default {
   },
   data() {
     return {
+      image: "",
       formData: {
         streetName: "",
-        houseNumber: "",
-        addition: "",
-        houseNumber: "",
+        houseNumber: 0,
         addition: "",
         postalCode: "",
         city: "",
-        picture: null,
-        price: "",
-        size: "",
+        picture: "",
+        price: 0,
+        size: 0,
         garage: "No",
-        bedrooms: "",
-        bathrooms: "",
-        constructionDate: "",
+        bedrooms: 0,
+        bathrooms: 0,
+        constructionDate: 0,
         description: "",
         isUserMade: true,
-        anything: "",
       },
     };
   },
   methods: {
+    onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      console.log(files[0].name);
+      console.log(URL.createObjectURL(e.target.files[0].name));
+      // this.formData.picture = URL.createObjectURL(e.target.files[0].name);
+      // this.formData.picture = new URL(e.target.src).pathname;
+      // img.src = URL.createObjectURL(files[0]);
+      // this.formData.picture = files[0].name;
+      // window.URL.createObjectURL(new Blob(files, { type: "image" }));
+      this.formData.picture = URL.createObjectURL(files);
+    },
     handleSubmit() {
       new Promise((resolve, reject) => {
         this.$store.commit("setFormData", this.formData);
         console.log(this.formData);
-        console.log(typeof this.formData.picture);
+        console.log(
+          "THIS IS THE TYPEOF PICTURE " + typeof this.formData.picture
+        );
         let id = this.$store.state.userMadeProperties.length - 1;
         resolve(id);
       })
@@ -211,38 +225,21 @@ export default {
           alert("your listing data wasn't saved. Try again.");
         });
     },
-    handleImageChange(event) {
-      let file = event.target.files[0];
-      if (file) {
-        new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            resolve(e.target.result);
-          };
-          reader.onerror = (e) => {
-            reject(e.error);
-          };
-          console.log("here for readAsDataURL");
-          reader.readAsDataURL(file);
-        })
-          .then((dataURL) => {
-            this.picture = dataURL;
-          })
-          .catch((error) => {
-            alert("your photo wasn't uploaded.");
-          });
-      }
-    },
   },
 };
 </script>
 
 <style scoped>
 /*shows elements only for desktop view and hides elements for mobile view*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 .showOnlyMobile {
   display: none;
 }
-
 .form__background {
   background-image: url("../assets/img_background@3x.png");
   background-size: cover;
@@ -341,6 +338,10 @@ select:focus {
   border: 1.5px solid #eb5440;
 }
 
+#garage {
+  color: #c3c3c3;
+}
+
 /*option styling*/
 option {
   padding: 20px;
@@ -372,6 +373,10 @@ textarea:focus {
   border: 1.5px solid #eb5440;
 }
 
+#description {
+  color: #c3c3c3;
+}
+
 /*post button styling*/
 button {
   display: inline-block;
@@ -383,6 +388,10 @@ button {
   width: 150px;
   border-radius: 5px;
   margin-bottom: 20px;
+}
+
+input:invalid ~ button {
+  opacity: 0.5;
 }
 
 /*error styles*/
@@ -402,13 +411,6 @@ button {
     display: block;
   }
 
-  /*resetting box sizing*/
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-
   .showOnlyMobile {
     display: none;
   }
@@ -422,22 +424,13 @@ button {
     padding: 30px;
     max-width: 100%;
     margin-bottom: 40px;
-    /* position: relative; */
   }
-
-  /* .btn__back--mobile{
-        height: 20px;
-        position: absolute;
-        top: 30px;
-        left: 30px;
-    } */
 
   .form__header--mobile {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-bottom: 10px;
-    /* display: none; */
   }
 
   .btn__back--mobile {

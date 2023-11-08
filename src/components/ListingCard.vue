@@ -10,7 +10,9 @@
         <img :src="picture" />
       </div>
       <div class="listingCard__information">
-        <h2 class="listingCard--address">{{ streetName }} {{ houseNumber }}</h2>
+        <h2 class="listingCard--address">
+          {{ streetName }} {{ houseNumber }} {{ houseNumberAdd }}
+        </h2>
         <p class="listingCard--price">€ {{ price }}</p>
         <p class="listingCard--zipcode">{{ postalCode }} {{ city }}</p>
         <div class="propertyDetails">
@@ -46,8 +48,9 @@ export default {
   components: { DeleteListing },
   props: {
     streetName: String,
-    houseNumber: String,
-    price: String,
+    houseNumber: Number,
+    houseNumberAdd: String,
+    price: Number,
     postalCode: String,
     city: String,
     bedrooms: Number,

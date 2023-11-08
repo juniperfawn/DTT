@@ -8,7 +8,8 @@ export default createStore({
     userMadeProperties: [
       {
         streetName: "Jan Evertsenplaats",
-        houseNumber: "98",
+        houseNumber: 98,
+        houseNumberAdd: "",
         price: 790.0,
         postalCode: "3012HS",
         city: "Rotterdam",
@@ -25,7 +26,8 @@ export default createStore({
       },
       {
         streetName: "Bergselaan",
-        houseNumber: "157",
+        houseNumber: 157,
+        houseNumberAdd: "A",
         price: 590.0,
         postalCode: "3037BJ",
         city: "Rotterdam",
@@ -42,7 +44,8 @@ export default createStore({
       },
       {
         streetName: "Vista Drive",
-        houseNumber: "275",
+        houseNumber: 275,
+        houseNumberAdd: "",
         price: 50000,
         postalCode: "81601",
         city: "Glenwood Springs",
@@ -142,6 +145,30 @@ export default createStore({
         state.nothingFound = false;
       }
     },
+    SET_PROPERTIES(state, properties) {
+      console.log("SET_PROPERTIES" + properties);
+      let newData = properties.map((property) => {
+        return {
+          streetName: property.location.street,
+          houseNumber: property.location.houseNumber,
+          houseNumberAdd: property.location.houseNumberAddition,
+          price: property.price,
+          postalCode: property.location.zip,
+          city: property.location.city,
+          bedrooms: property.rooms.bedrooms,
+          bathrooms: property.rooms.bathrooms,
+          garage: property.hasGarage ? "Yes" : "No",
+          size: property.size,
+          constructionDate: property.constructionYear,
+          picture: property.image,
+          description: property.description,
+          id: property.id,
+          isUserMade: property.madeByMe,
+        };
+      });
+      state.userMadeProperties = newData;
+      state.displayedProperties = state.userMadeProperties;
+    },
   },
   actions: {
     sortByPrice({ commit }) {
@@ -153,6 +180,31 @@ export default createStore({
     sortBySearch({ commit }) {
       commit("sortBySearch");
     },
+    getApiProperties({ commit }) {
+      fetch("https://api.intern.d-tt.nl/api/houses", {
+        methods: "GET",
+        headers: {
+          Accept: "application/json",
+          "X-Api-Key": "eZAMbHDt3QsdXruE-qUlyKYGxif5J9kN",
+        },
+      })
+        .then((res) => {
+          if (res.ok) {
+            console.log("SUCCESS");
+          } else {
+            console.log("NOT SUCCESSFUL");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          commit("SET_PROPERTIES", data);
+          console.log(data);
+        })
+        .catch((error) => console.log("ERROR"));
+    },
   },
   modules: {},
 });
+
+//API KEY => eZAMbHDt3QsdXruE-qUlyKYGxif5J9kN
+//"MIMEtypes"

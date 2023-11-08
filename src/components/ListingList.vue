@@ -9,6 +9,7 @@
       <ListingCard
         :streetName="item.streetName"
         :houseNumber="item.houseNumber"
+        :houseNumberAdd="item.houseNumberAdd"
         :postalCode="item.postalCode"
         :city="item.city"
         :price="item.price"
@@ -34,11 +35,7 @@ export default {
   mounted() {
     this.$store.state.displayedProperties =
       this.$store.state.userMadeProperties;
-    // for (const property in this.$store.state.userMadeProperties) {
-    //   if (property.image == null) {
-    //     property.image = this.$store.state.tempImage;
-    //   }
-    // }
+    // this.$store.dispatch("getApiProperties");
   },
   computed: {
     ...mapState(["nothingFound"]),

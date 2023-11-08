@@ -32,7 +32,11 @@
 
     <div class="listingInfo__wrapper">
       <div class="listing__topElements">
-        <h1>{{ listingById(listingId).streetName }}</h1>
+        <h1>
+          {{ listingById(listingId).streetName }}
+          {{ listingById(listingId).houseNumber }}
+          {{ listingById(listingId).houseNumberAdd }}
+        </h1>
         <div
           v-if="listingById(listingId).isUserMade"
           class="listingCard__edit showOnlyDesktop"
