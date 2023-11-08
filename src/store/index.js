@@ -91,9 +91,16 @@ export default createStore({
     },
     setFormData(state, data) {
       console.log(data);
+      console.log(state.userMadeProperties);
       data.id = state.userMadeProperties.length; // Generate a unique ID
+      if (data.picture == "") {
+        data.picture = tempImage;
+      }
+      console.log(data);
       state.userMadeProperties.push(data);
+      console.log(state.userMadeProperties.push);
       state.displayedProperties = state.userMadeProperties;
+      console.log(state.displayedProperties);
     },
     setEditedData(state, data) {
       state.userMadeProperties[data.listingId] = data.formData;
@@ -162,10 +169,13 @@ export default createStore({
           constructionDate: property.constructionYear,
           picture: property.image,
           description: property.description,
-          id: property.id,
+          id: property.id, //set id up differently
           isUserMade: property.madeByMe,
         };
       });
+      for (let i = 0; i < newData.length; i++) {
+        newData[i].id = i;
+      }
       state.userMadeProperties = newData;
       state.displayedProperties = state.userMadeProperties;
     },

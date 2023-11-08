@@ -70,7 +70,12 @@
           <div class="uploadImgWrapper">
             <img src="../assets/ic_upload@3x.png" />
           </div>
-          <input type="file" id="picture" name="picture" required />
+          <input
+            type="file"
+            id="picture"
+            name="picture"
+            @change="onFileChange"
+          />
         </div>
 
         <label for="price">Price*</label><br />
@@ -189,6 +194,10 @@ export default {
     };
   },
   methods: {
+    onFileChange(e) {
+      var files = e.target.files;
+      this.formData.picture = URL.createObjectURL(e.target.files[0]);
+    },
     handleSave() {
       new Promise((resolve, reject) => {
         this.$store.commit("setEditedData", {

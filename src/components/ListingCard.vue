@@ -165,4 +165,16 @@ export default {
 .listingCard__edit img:hover {
   transform: scale(1.2);
 }
+
+/* @media (max-width: 750px) {
+  .listingCard--address {
+    font-size: 14px;
+  }
+
+  .listingCard--address,
+  .listingCard--price,
+  .listingCard--zipcode {
+    font-size: 12px;
+  }
+} */
 </style>

@@ -10,7 +10,6 @@
         <div></div>
       </div>
       <h1 class="showOnlyDesktop">Create new listing</h1>
-      <h1>{{ formData.streetName }}</h1>
       <h1>{{ formData.picture }}</h1>
       <form @submit.prevent="handleSubmit">
         <label for="streetName">Street name*</label><br />
@@ -196,23 +195,12 @@ export default {
   },
   methods: {
     onFileChange(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      console.log(files[0].name);
-      console.log(URL.createObjectURL(e.target.files[0].name));
-      // this.formData.picture = URL.createObjectURL(e.target.files[0].name);
-      // this.formData.picture = new URL(e.target.src).pathname;
-      // img.src = URL.createObjectURL(files[0]);
-      // this.formData.picture = files[0].name;
-      // window.URL.createObjectURL(new Blob(files, { type: "image" }));
-      this.formData.picture = URL.createObjectURL(files);
+      var files = e.target.files;
+      this.formData.picture = URL.createObjectURL(e.target.files[0]);
     },
     handleSubmit() {
       new Promise((resolve, reject) => {
         this.$store.commit("setFormData", this.formData);
-        console.log(this.formData);
-        console.log(
-          "THIS IS THE TYPEOF PICTURE " + typeof this.formData.picture
-        );
         let id = this.$store.state.userMadeProperties.length - 1;
         resolve(id);
       })
@@ -222,7 +210,7 @@ export default {
           });
         })
         .catch((error) => {
-          alert("your listing data wasn't saved. Try again.");
+          alert("your listing data wasn't saved. Try again." + error);
         });
     },
   },

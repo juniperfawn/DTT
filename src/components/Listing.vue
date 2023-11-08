@@ -100,7 +100,7 @@ export default {
     DeleteListing,
   },
   props: {
-    listingId: Number,
+    listingId: String, //? number
   },
   computed: {
     ...mapGetters(["getListingById"]),

@@ -1,42 +1,45 @@
 <template>
-  <Navigation class="showOnlyDesktop"/>
-  <router-view/>
-  <NavigationMobile class="showOnlyMobile"/>
+  <Navigation class="showOnlyDesktop" />
+  <router-view />
+  <NavigationMobile class="showOnlyMobile" />
 </template>
 
 <script>
-import Navigation from './components/Navigation.vue'
-import NavigationMobile from './components/NavigationMobile.vue';
+import Navigation from "./components/Navigation.vue";
+import NavigationMobile from "./components/NavigationMobile.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Navigation, 
-    NavigationMobile
-  }
-}
+    Navigation,
+    NavigationMobile,
+  },
+  mounted() {
+    this.$store.dispatch("getApiProperties");
+  },
+};
 </script>
 
 <style>
-body{
+body {
   background-color: #f6f6f6;
   margin: 0px;
   padding: 0px;
 }
 
- /*shows elements only for desktop view and hides elements for mobile view*/
- .showOnlyMobile{
-        display: none;
-  }
+/*shows elements only for desktop view and hides elements for mobile view*/
+.showOnlyMobile {
+  display: none;
+}
 
-  @media (max-width: 750px){
-    /*shows elements only for mobile view and hides elements for desktop view*/
-    .showOnlyDesktop{
+@media (max-width: 750px) {
+  /*shows elements only for mobile view and hides elements for desktop view*/
+  .showOnlyDesktop {
     display: none;
-    }
-
-    .showOnlyMobile{
-      display: block;
-    }
   }
+
+  .showOnlyMobile {
+    display: block;
+  }
+}
 </style>

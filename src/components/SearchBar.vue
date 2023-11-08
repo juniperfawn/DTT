@@ -46,7 +46,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["userMadeProperties", "searchQuery", "showX"]),
+    ...mapState(["userMadeProperties", "showX"]),
   },
   methods: {
     ...mapActions(["sortByPrice", "sortBySize"]),
