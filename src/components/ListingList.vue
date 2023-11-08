@@ -33,8 +33,7 @@ export default {
     ListingCard,
   },
   mounted() {
-    this.$store.state.displayedProperties =
-      this.$store.state.userMadeProperties;
+    this.$store.state.displayedProperties = this.$store.state.properties;
     // this.$store.dispatch("getApiProperties");
   },
   computed: {

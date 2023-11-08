@@ -68,7 +68,22 @@
         <div class="uploadFileWrapper">
           <label for="picture">Upload picture (PNG or JPG)*</label><br />
           <div class="uploadImgWrapper">
-            <img src="../assets/ic_upload@3x.png" />
+            <img
+              v-if="this.formData.picture"
+              class="uploadedPhotoX"
+              @click="clearPicture"
+              src="../assets/ic_clear_white@3x.png"
+            />
+            <img
+              v-if="this.formData.picture"
+              class="uploadedPhoto"
+              :src="this.formData.picture"
+            />
+            <img
+              v-if="!this.formData.picture"
+              class="noUploadedPhoto"
+              src="../assets/ic_upload@3x.png"
+            />
           </div>
           <input
             type="file"
@@ -102,9 +117,15 @@
           </div>
           <div>
             <label for="garage">Garage*</label><br />
-            <select id="garage" name="garage" required v-model="garage">
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
+            <select
+              id="garage"
+              name="garage"
+              required
+              v-model="formData.garage"
+            >
+              <option :value="formData.garage">{{ formData.garage }}</option>
+              <option v-if="formData.garage == 'No'" value="Yes">Yes</option>
+              <option v-if="formData.garage == 'Yes'" value="No">No</option>
             </select>
           </div>
         </div>
@@ -172,7 +193,7 @@ export default {
     listingId: Number,
   },
   data() {
-    let listing = this.$store.state.userMadeProperties[this.listingId];
+    let listing = this.$store.state.properties[this.listingId];
     return {
       formData: {
         streetName: listing.streetName,
@@ -183,6 +204,7 @@ export default {
         picture: listing.picture,
         price: listing.price,
         size: listing.size,
+        garage: listing.garage,
         garage: listing.garage,
         bedrooms: listing.bedrooms,
         bathrooms: listing.bathrooms,
@@ -195,7 +217,6 @@ export default {
   },
   methods: {
     onFileChange(e) {
-      var files = e.target.files;
       this.formData.picture = URL.createObjectURL(e.target.files[0]);
     },
     handleSave() {
@@ -311,10 +332,26 @@ input[type="text"]:focus {
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
+  position: relative;
 }
 
-.uploadFileWrapper img {
+.uploadFileWrapper .noUploadedPhoto {
   height: 25px;
+}
+
+.uploadedPhoto {
+  height: 80px;
+  width: 80px;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+  border-radius: 5px;
+}
+
+.uploadedPhotoX {
+  height: 25px;
+  position: absolute;
+  top: -15px;
+  right: -15px;
 }
 
 .uploadFileWrapper input[type="file"] {

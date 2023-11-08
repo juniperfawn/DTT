@@ -6,7 +6,6 @@
       :to="{ name: 'byListing', params: { listingId: listingId } }"
     >
       <div class="imgWrapper">
-        <!-- <img src="../assets/img_placeholder_house@3x.png" /> -->
         <img :src="picture" />
       </div>
       <div class="listingCard__information">
@@ -50,7 +49,7 @@ export default {
     streetName: String,
     houseNumber: Number,
     houseNumberAdd: String,
-    price: Number,
+    price: String,
     postalCode: String,
     city: String,
     bedrooms: Number,

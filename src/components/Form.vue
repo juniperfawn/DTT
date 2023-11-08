@@ -10,7 +10,6 @@
         <div></div>
       </div>
       <h1 class="showOnlyDesktop">Create new listing</h1>
-      <h1>{{ formData.picture }}</h1>
       <form @submit.prevent="handleSubmit">
         <label for="streetName">Street name*</label><br />
         <input
@@ -69,7 +68,22 @@
         <div class="uploadFileWrapper">
           <label for="picture">Upload picture (PNG or JPG)*</label><br />
           <div class="uploadImgWrapper">
-            <img src="../assets/ic_upload@3x.png" />
+            <img
+              v-if="this.formData.picture"
+              class="uploadedPhotoX"
+              @click="clearPicture"
+              src="../assets/ic_clear_white@3x.png"
+            />
+            <img
+              v-if="this.formData.picture"
+              class="uploadedPhoto"
+              :src="this.formData.picture"
+            />
+            <img
+              v-if="!this.formData.picture"
+              class="noUploadedPhoto"
+              src="../assets/ic_upload@3x.png"
+            />
           </div>
           <input
             type="file"
@@ -82,7 +96,7 @@
 
         <label for="price">Price*</label><br />
         <input
-          type="number"
+          type="text"
           id="price"
           name="price"
           placeholder="e.g. €150.000"
@@ -104,8 +118,13 @@
           </div>
           <div>
             <label for="garage">Garage*</label><br />
-            <select id="garage" name="garage" required v-model="garage">
-              <option value="select" disabled hidden selected>Select</option>
+            <select
+              id="garage"
+              name="garage"
+              required
+              v-model="formData.garage"
+            >
+              <option value="select" disabled selected>Select</option>
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
@@ -177,31 +196,33 @@ export default {
       image: "",
       formData: {
         streetName: "",
-        houseNumber: 0,
+        houseNumber: null,
         addition: "",
         postalCode: "",
         city: "",
         picture: "",
-        price: 0,
-        size: 0,
-        garage: "No",
-        bedrooms: 0,
-        bathrooms: 0,
-        constructionDate: 0,
+        price: "",
+        size: null,
+        garage: "select",
+        bedrooms: null,
+        bathrooms: null,
+        constructionDate: null,
         description: "",
         isUserMade: true,
       },
     };
   },
   methods: {
+    clearPicture() {
+      this.formData.picture = "";
+    },
     onFileChange(e) {
-      var files = e.target.files;
       this.formData.picture = URL.createObjectURL(e.target.files[0]);
     },
     handleSubmit() {
       new Promise((resolve, reject) => {
         this.$store.commit("setFormData", this.formData);
-        let id = this.$store.state.userMadeProperties.length - 1;
+        let id = this.$store.state.properties.length - 1;
         resolve(id);
       })
         .then((id) => {
@@ -210,7 +231,7 @@ export default {
           });
         })
         .catch((error) => {
-          alert("your listing data wasn't saved. Try again." + error);
+          alert("Your listing data wasn't saved. Try again. " + error);
         });
     },
   },
@@ -294,10 +315,26 @@ input[type="text"]:focus {
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
+  position: relative;
 }
 
-.uploadFileWrapper img {
+.uploadFileWrapper .noUploadedPhoto {
   height: 25px;
+}
+
+.uploadedPhoto {
+  height: 80px;
+  width: 80px;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+  border-radius: 5px;
+}
+
+.uploadedPhotoX {
+  height: 25px;
+  position: absolute;
+  top: -15px;
+  right: -15px;
 }
 
 .uploadFileWrapper input[type="file"] {

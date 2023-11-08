@@ -115,6 +115,11 @@ export default {
 </script>
 
 <style scoped>
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 /*shows elements only for desktop view and hides elements for mobile view*/
 .showOnlyMobile {
   display: none;
@@ -206,13 +211,11 @@ export default {
   }
 
   .mobile__wrapper {
-    /* position: absolute; */
     top: 20px;
   }
 
   .listing__header--mobile {
     display: flex;
-    /* justify-content: space-between; */
     gap: 275px;
     align-items: center;
     position: absolute;
@@ -246,10 +249,10 @@ export default {
     top: 300px;
     left: 0;
     height: 100%;
-    /* width: 355px; */
+    width: 100%;
   }
   .listingInfo__wrapper .listingDescription {
-    padding: 10px 0px 0px 0px;
+    padding: 10px 0px 70px 0px;
   }
 }
 </style>
