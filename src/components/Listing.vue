@@ -5,7 +5,6 @@
     <div class="house__imgWrapper">
       <img :src="listingById(listingId).picture" />
     </div>
-
     <div class="mobile__wrapper showOnlyMobile">
       <div>
         <div class="listing__header--mobile">
@@ -32,11 +31,18 @@
 
     <div class="listingInfo__wrapper">
       <div class="listing__topElements">
-        <h1>
-          {{ listingById(listingId).streetName }}
-          {{ listingById(listingId).houseNumber }}
-          {{ listingById(listingId).houseNumberAdd }}
-        </h1>
+        <div class="listing__topElements--title">
+          <h1>
+            {{ listingById(listingId).streetName }}
+            {{ listingById(listingId).houseNumber }}
+            {{ listingById(listingId).houseNumberAdd }}
+          </h1>
+          <img
+            v-if="listingById(listingId).favorite"
+            class="listingCard__favorite--icon"
+            src="../assets/star-icon.png"
+          />
+        </div>
         <div
           v-if="listingById(listingId).isUserMade"
           class="listingCard__edit showOnlyDesktop"
@@ -85,6 +91,13 @@
       <p class="listingDescription">
         {{ listingById(listingId).description }}
       </p>
+      <button
+        @click="setFav"
+        class="listing__favorite--button"
+        :data-fav="listingById(listingId).favorite"
+      >
+        {{ listingById(listingId).favoriteMessage }}
+      </button>
     </div>
   </div>
 </template>
@@ -92,7 +105,7 @@
 <script>
 import OverviewBtn from "./OverviewBtn.vue";
 import DeleteListing from "./DeleteListing.vue";
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapState } from "vuex";
 export default {
   name: "Listing",
   components: {
@@ -100,16 +113,20 @@ export default {
     DeleteListing,
   },
   props: {
-    listingId: String, //? number
+    listingId: String,
   },
   computed: {
     ...mapGetters(["getListingById"]),
+    ...mapState(["favoriteMessage"]),
     listingById() {
       return (listingId) => this.getListingById(listingId);
     },
   },
   methods: {
     ...mapMutations(["setShowModal"]),
+    setFav() {
+      this.$store.commit("setFavorite", +this.listingId);
+    },
   },
 };
 </script>
@@ -120,16 +137,12 @@ export default {
 *::after {
   box-sizing: border-box;
 }
+
 /*shows elements only for desktop view and hides elements for mobile view*/
 .showOnlyMobile {
   display: none;
 }
-.listing__topElements {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  /* background-color: red; */
-}
+
 .listingCard__large {
   margin-left: 350px;
   width: 550px;
@@ -151,8 +164,19 @@ export default {
 }
 
 /*house listing information & details*/
+.listing__topElements {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.listing__topElements--title {
+  display: flex;
+  align-items: center;
+  gap: 20px !important;
+}
 .listingInfo__wrapper {
-  padding: 10px 30px 0px 30px;
+  padding: 10px 30px 10px 30px;
 }
 
 .listingInfo__wrapper * {
@@ -200,6 +224,33 @@ export default {
   gap: 20px;
 }
 
+/*button styling*/
+.listing__favorite--button {
+  background-color: #eb5440;
+  display: inline-block;
+  border: none;
+  text-decoration: none;
+  color: #ffffff;
+  padding: 10px;
+  transition-duration: 300ms;
+  border-radius: 5px;
+  width: 120px;
+}
+
+.listing__favorite--button[data-fav="true"] {
+  background-color: #c3c3c3;
+}
+
+/* favorited icon*/
+.listingCard__favorite--icon {
+  height: 40px;
+}
+
+.listingCard__favorite--icon {
+  height: 30px !important;
+}
+
+/*mobile styles */
 @media (max-width: 750px) {
   /*shows elements only for mobile view and hides elements for desktop view*/
   .showOnlyMobile {
@@ -216,7 +267,7 @@ export default {
 
   .listing__header--mobile {
     display: flex;
-    gap: 275px;
+    gap: 375px;
     align-items: center;
     position: absolute;
     top: 20px;
@@ -239,7 +290,6 @@ export default {
     margin-left: 0px;
     width: 100%;
     position: relative;
-    background-color: red;
   }
 
   .listingInfo__wrapper {
@@ -250,9 +300,10 @@ export default {
     left: 0;
     height: 100%;
     width: 100%;
+    padding-bottom: 470px;
   }
   .listingInfo__wrapper .listingDescription {
-    padding: 10px 0px 70px 0px;
+    padding: 10px 0px 30px 0px;
   }
 }
 </style>

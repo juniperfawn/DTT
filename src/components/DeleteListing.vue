@@ -7,7 +7,7 @@
           <p>Are you sure you want to delete this listing?</p>
           <p>This action cannot be undone.</p>
         </div>
-        <div class="buttons">
+        <div class="modal__buttons">
           <button
             class="btn__delete"
             @click="
@@ -31,6 +31,9 @@ export default {
   props: {
     listingId: Number,
   },
+  computed: {
+    ...mapState(["showModal"]),
+  },
   methods: {
     deleteListing(listingId) {
       new Promise((resolve, reject) => {
@@ -49,9 +52,6 @@ export default {
     },
     ...mapMutations(["setShowModal"]),
   },
-  computed: {
-    ...mapState(["showModal"]),
-  },
 };
 </script>
 
@@ -59,7 +59,7 @@ export default {
 .deleteListing__darkBackground {
   height: 100vh;
   width: 100vw;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,6 +86,7 @@ h2 {
   line-height: 1.2rem;
 }
 
+/*button styling*/
 button {
   display: inline-block;
   border: none;
@@ -95,8 +96,7 @@ button {
   border-radius: 5px;
 }
 
-/*button styling*/
-.buttons {
+.modal__buttons {
   display: grid;
   gap: 10px;
 }
@@ -111,7 +111,6 @@ button {
 
 /*styles for mobile*/
 @media (max-width: 750px) {
-  /*shows elements only for mobile view and hides elements for desktop view*/
   .deleteListing__container {
     padding: 20px 40px 20px 40px;
   }

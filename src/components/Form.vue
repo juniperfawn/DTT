@@ -209,6 +209,8 @@ export default {
         constructionDate: null,
         description: "",
         isUserMade: true,
+        favorite: false,
+        favoriteMessage: "FAVORITE",
       },
     };
   },
@@ -239,13 +241,13 @@ export default {
 </script>
 
 <style scoped>
-/*shows elements only for desktop view and hides elements for mobile view*/
-
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
+
+/*shows elements only for desktop view and hides elements for mobile view*/
 .showOnlyMobile {
   display: none;
 }
@@ -293,7 +295,7 @@ input {
 input[placeholder] {
   padding: 10px;
   font-size: 10px;
-  color: #c3c3c3;
+  color: rgba(74, 75, 76, 0.7);
 }
 
 input[type="text"]:focus {
@@ -364,7 +366,7 @@ select:focus {
 }
 
 #garage {
-  color: #c3c3c3;
+  color: rgba(74, 75, 76, 0.7);
 }
 
 /*option styling*/
@@ -399,10 +401,10 @@ textarea:focus {
 }
 
 #description {
-  color: #c3c3c3;
+  color: rgba(74, 75, 76, 0.7);
 }
 
-/*post button styling*/
+/*button styling*/
 button {
   display: inline-block;
   border: none;
@@ -419,13 +421,7 @@ input:invalid ~ button {
   opacity: 0.5;
 }
 
-/*error styles*/
-.error {
-  color: #eb5440;
-  font-size: 10px;
-}
-
-/*styles for mobile*/
+/*mobile styles*/
 @media (max-width: 750px) {
   /*shows elements only for mobile view and hides elements for desktop view*/
   .showOnlyDesktop {

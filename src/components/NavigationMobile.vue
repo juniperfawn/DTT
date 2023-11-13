@@ -67,11 +67,6 @@ a {
   transition-duration: 300ms;
 }
 
-/* a:hover, a.router-link-exact-active{
-        font-weight: bold;
-        color: #000000;
-    } */
-
 img {
   height: 25px;
 }

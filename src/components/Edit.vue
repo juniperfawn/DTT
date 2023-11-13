@@ -212,6 +212,8 @@ export default {
         description: listing.description,
         id: +this.listingId,
         isUserMade: true,
+        favorite: listing.favorite,
+        favoriteMessage: listing.favoriteMessage,
       },
     };
   },
@@ -302,7 +304,7 @@ input {
 input[placeholder] {
   padding: 10px;
   font-size: 10px;
-  color: #c3c3c3;
+  color: rgba(74, 75, 76, 0.7);
 }
 
 input[type="text"]:focus {
@@ -310,11 +312,11 @@ input[type="text"]:focus {
 }
 
 #description {
-  color: #c3c3c3;
+  color: rgba(74, 75, 76, 0.7);
 }
 
 #garage {
-  color: #c3c3c3;
+  color: rgba(74, 75, 76, 0.7);
 }
 
 /*upload photo styling*/
@@ -428,13 +430,7 @@ input:invalid ~ button {
   opacity: 0.5;
 }
 
-/*error styles*/
-.error {
-  color: #eb5440;
-  font-size: 10px;
-}
-
-/*styles for mobile*/
+/*mobile styles*/
 @media (max-width: 750px) {
   /*shows elements only for mobile view and hides elements for desktop view*/
   .showOnlyDesktop {

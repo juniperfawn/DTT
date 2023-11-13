@@ -12,6 +12,7 @@ export default createStore({
     showModal: false,
     nothingFound: false,
     showX: false,
+    category: "all",
   },
   getters: {
     getListingById: (state) => (id) => {
@@ -24,6 +25,17 @@ export default createStore({
     },
   },
   mutations: {
+    setFavorite(state, id) {
+      let listingFav = state.properties[id].favorite;
+      if (!listingFav) {
+        state.properties[id].favorite = true;
+        state.properties[id].favoriteMessage = "UNFAVORITE";
+      } else {
+        state.properties[id].favorite = false;
+        state.properties[id].favoriteMessage = "FAVORITE";
+      }
+      state.displayedProperties = state.properties;
+    },
     setShowModal(state) {
       if (!state.showModal) {
         state.showModal = true;
@@ -32,13 +44,16 @@ export default createStore({
       }
     },
     setDisplayProperties(state) {
+      state.category = "all";
       state.displayedProperties = state.properties;
     },
     setFormData(state, data) {
-      data.id = state.properties.length; // Generate a unique ID
+      // Generate a unique ID
+      data.id = state.properties.length;
       if (data.picture == "") {
         data.picture = tempImage;
       }
+      //format price value to a string with '.' as the seperator
       if (data.price > 999) {
         data.price = data.price
           .toString()
@@ -52,6 +67,12 @@ export default createStore({
     setEditedData(state, data) {
       state.properties[data.listingId] = data.formData;
       state.displayedProperties = state.properties;
+    },
+    sortByFavorite(state) {
+      state.category = "favorite";
+      state.displayedProperties = state.displayedProperties.filter(
+        (property) => property.favorite == true
+      );
     },
     sortByPrice(state) {
       if (state.isPriceAscending) {
@@ -90,8 +111,16 @@ export default createStore({
       } else {
         state.showX = false;
       }
+      //state.category to determine if search query through all listings or just favorited list
       state.displayedProperties = state.properties.filter((listing) => {
-        return listing.streetName.toLowerCase().includes(query);
+        if (state.category == "all") {
+          return listing.streetName.toLowerCase().includes(query);
+        } else if (state.category == "favorite") {
+          return (
+            listing.streetName.toLowerCase().includes(query) &&
+            listing.favorite == true
+          );
+        }
       });
       if (state.displayedProperties.length == 0) {
         state.nothingFound = true;
@@ -100,7 +129,6 @@ export default createStore({
       }
     },
     SET_PROPERTIES(state, properties) {
-      console.log("SET_PROPERTIES" + properties);
       let newData = properties.map((property) => {
         return {
           streetName: property.location.street,
@@ -118,11 +146,14 @@ export default createStore({
           description: property.description,
           id: null,
           isUserMade: property.madeByMe,
+          favorite: false,
+          favoriteMessage: "FAVORITE",
         };
       });
       //re-assign all listing to page-id schema
       for (let i = 0; i < newData.length; i++) {
         newData[i].id = i;
+        //re-format price to fit schema
         if (newData[i].price > 999) {
           newData[i].price = newData[i].price
             .toString()
@@ -145,6 +176,12 @@ export default createStore({
     sortBySearch({ commit }) {
       commit("sortBySearch");
     },
+    sortByFavorite({ commit }) {
+      commit("sortByFavorite");
+    },
+    setDisplayProperties({ commit }) {
+      commit("setDisplayProperties");
+    },
     getApiProperties({ commit }) {
       fetch("https://api.intern.d-tt.nl/api/houses", {
         methods: "GET",
@@ -154,18 +191,12 @@ export default createStore({
         },
       })
         .then((res) => {
-          if (res.ok) {
-            console.log("SUCCESS");
-          } else {
-            console.log("NOT SUCCESSFUL");
-          }
           return res.json();
         })
         .then((data) => {
           commit("SET_PROPERTIES", data);
-          console.log(data);
         })
-        .catch((error) => console.log("ERROR"));
+        .catch((error) => console.log("ERROR" + error));
     },
   },
   modules: {},

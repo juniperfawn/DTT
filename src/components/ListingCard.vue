@@ -9,9 +9,16 @@
         <img :src="picture" />
       </div>
       <div class="listingCard__information">
-        <h2 class="listingCard--address">
-          {{ streetName }} {{ houseNumber }} {{ houseNumberAdd }}
-        </h2>
+        <div class="listingCard__header">
+          <h2 class="listingCard--address">
+            {{ streetName }} {{ houseNumber }} {{ houseNumberAdd }}
+          </h2>
+          <img
+            v-if="favorite"
+            class="listingCard__favorite--icon"
+            src="../assets/star-icon.png"
+          />
+        </div>
         <p class="listingCard--price">€ {{ price }}</p>
         <p class="listingCard--zipcode">{{ postalCode }} {{ city }}</p>
         <div class="propertyDetails">
@@ -58,6 +65,7 @@ export default {
     listingId: Number,
     picture: String,
     isUserMade: Boolean,
+    favorite: Boolean,
   },
   methods: {
     ...mapMutations(["setShowModal"]),
@@ -73,6 +81,7 @@ export default {
   border-radius: 5px;
   box-shadow: 0px 0px 8px -1px rgb(183, 183, 183, 0.5);
 }
+
 .listingCard {
   display: flex;
   align-items: center;
@@ -105,12 +114,23 @@ export default {
   margin-top: 20px;
 }
 
+.listingCard__header {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.listingCard__favorite--icon {
+  height: 20px;
+  padding-bottom: 8px;
+}
+
 .listingCard--address,
 .listingCard--price,
 .listingCard--zipcode {
   font-family: Montserrat;
   font-weight: semi-bold;
-  font-size: 14px;
+  font-size: 12px;
   margin: 0px 0px 7px 0px;
 }
 
@@ -164,16 +184,4 @@ export default {
 .listingCard__edit img:hover {
   transform: scale(1.2);
 }
-
-/* @media (max-width: 750px) {
-  .listingCard--address {
-    font-size: 14px;
-  }
-
-  .listingCard--address,
-  .listingCard--price,
-  .listingCard--zipcode {
-    font-size: 12px;
-  }
-} */
 </style>

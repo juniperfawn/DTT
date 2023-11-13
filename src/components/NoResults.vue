@@ -31,6 +31,7 @@ export default {
   padding-bottom: 20px;
 }
 
+/*mobile styles*/
 @media (max-width: 750px) {
   .noResults__wrapper img {
     height: 100px;

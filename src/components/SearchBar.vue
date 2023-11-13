@@ -22,6 +22,7 @@
           src="../assets/ic_clear@3x.png"
         />
         <input
+          ref="searchField"
           type="search"
           placeholder="search for a house"
           v-model="searchQuery"
@@ -37,7 +38,7 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapMutations } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
   name: "SearchBar",
   data() {
@@ -166,7 +167,6 @@ input[type="search"]::-webkit-search-results-decoration {
   align-items: center;
   position: absolute;
   top: 0px;
-  /* bottom:-23px; */
   padding: 0px 10px 0px 10px;
   width: 100%;
   height: 100%;

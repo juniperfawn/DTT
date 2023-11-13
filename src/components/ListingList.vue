@@ -19,6 +19,7 @@
         :listingId="item.id"
         :picture="item.picture"
         :isUserMade="item.isUserMade"
+        :favorite="item.favorite"
       />
     </div>
   </div>
@@ -32,12 +33,11 @@ export default {
   components: {
     ListingCard,
   },
-  mounted() {
-    this.$store.state.displayedProperties = this.$store.state.properties;
-    // this.$store.dispatch("getApiProperties");
-  },
   computed: {
     ...mapState(["nothingFound"]),
+  },
+  mounted() {
+    this.$store.state.displayedProperties = this.$store.state.properties;
   },
 };
 </script>
