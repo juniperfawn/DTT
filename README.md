@@ -1,19 +1,9 @@
 # dtt-assignment-01
 
-## Project setup
-```
-yarn install
-```
+Implimentation of design based off screen sizes (ideal sized for inspect dev tools): 
+[DESKTOP VIEW](https://overflow.io/s/SQY91U3K/?node=a1b1f199): 1920xp
+[MOBILE VIEW]([https://pages.github.com/](https://overflow.io/s/SQY91U3K/?node=08a536d0)): 414px 
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+API KEY: eZAMbHDt3QsdXruE-qUlyKYGxif5J9kN
 
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+HOUR LOG: Found in files above 
