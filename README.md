@@ -1,6 +1,6 @@
 # Dtt Assignment
 
-Implimentation of design based off screen sizes (ideal sized for inspect dev tools): 
+Implimentation of design based off screen sizes (ideal sized for inspect dev tools): <br>
 [DESKTOP VIEW](https://overflow.io/s/SQY91U3K/?node=a1b1f199): 1920xp <br>
 [MOBILE VIEW](https://overflow.io/s/SQY91U3K/?node=08a536d0): 414px <br>
 
