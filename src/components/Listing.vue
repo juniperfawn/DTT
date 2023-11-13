@@ -267,7 +267,7 @@ export default {
 
   .listing__header--mobile {
     display: flex;
-    gap: 375px;
+    gap: 275px;
     align-items: center;
     position: absolute;
     top: 20px;

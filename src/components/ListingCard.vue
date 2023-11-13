@@ -107,6 +107,7 @@ export default {
   transition-duration: 300ms;
   object-fit: cover;
   height: 100%;
+  width: 100%;
 }
 
 /*property details & information about listing */
