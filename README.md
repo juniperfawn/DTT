@@ -15,3 +15,7 @@ CRITERIA: <br>
 -UI libraries are **not** used (e.g. Tailwind, Bootstrap, Vuetify, etc) <br> 
 -Code is adequately commented and consistently formatted <br> 
 -Hours are tracked and logged. <br>
+
+BONUS POINTS: <br>
+-About Page<br> 
+-"Favorite" Functionality<br> 
