@@ -12,6 +12,7 @@
 </template>
 
 <script>
+//adding a comment for testing purposes
 import { mapActions } from "vuex";
 export default {
   name: "SearchBarExtra",

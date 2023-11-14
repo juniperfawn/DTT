@@ -1,7 +1,9 @@
 <template>
   <nav>
     <div class="nav__items--Wrapper">
-      <img src="../assets/img_logo_dtt@3x.png" />
+      <router-link :to="{ name: 'home' }">
+        <img src="../assets/img_logo_dtt@3x.png" />
+      </router-link>
       <ul>
         <li class="link___houses">
           <router-link :to="{ name: 'home' }">Houses</router-link>
