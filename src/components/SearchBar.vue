@@ -1,14 +1,14 @@
 <template>
   <div class="searchBar">
     <div class="searchBar__topWrapper showOnlyDesktop">
-      <h2>Houses</h2>
+      <h1>Houses</h1>
       <router-link :to="{ name: 'form' }">
         <button class="btn__createNew">+ CREATE NEW</button>
       </router-link>
     </div>
     <div class="searchBar__topWrapper--mobile showOnlyMobile">
       <div></div>
-      <h2>Houses</h2>
+      <h1>Houses</h1>
       <router-link :to="{ name: 'form' }">
         <img src="../assets/ic_plus_grey@3x.png" />
       </router-link>
@@ -75,6 +75,11 @@ export default {
   align-items: center;
 }
 
+.searchBar__topWrapper h1 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
 .searchBar__bottomWrapper {
   display: flex;
   justify-content: space-between;
@@ -95,6 +100,7 @@ button {
 
 button:hover {
   transform: scale(1.04);
+  cursor: pointer;
 }
 
 .btn__createNew {
@@ -198,6 +204,10 @@ input[type="search"]::-webkit-search-results-decoration {
     align-items: center;
   }
 
+  .searchBar__topWrapper--mobile h1 {
+    font-size: 18px;
+  }
+
   .searchBar__topWrapper--mobile img {
     height: 20px;
   }
@@ -205,6 +215,10 @@ input[type="search"]::-webkit-search-results-decoration {
   .searchBar__bottomWrapper {
     display: block;
     margin-top: 10px;
+  }
+
+  button {
+    font-size: 12px;
   }
 
   .filterButtons {

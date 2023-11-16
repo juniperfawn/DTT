@@ -46,7 +46,7 @@ li {
 
 a {
   font-family: Montserrat;
-  font-weight: medium;
+  font-weight: bold;
   text-decoration: none;
   color: #e8e8e8;
   font-size: 14px;
