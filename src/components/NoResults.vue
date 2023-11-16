@@ -1,6 +1,9 @@
 <template>
   <div v-if="nothingFound" class="noResults__wrapper">
-    <img src="../assets/img_empty_houses@3x.png" />
+    <img
+      src="../assets/img_empty_houses@3x.png"
+      alt="vector graphic of a house and spyglass"
+    />
     <p>No results found.</p>
     <p>Please try another keyword.</p>
   </div>

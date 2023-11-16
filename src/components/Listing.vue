@@ -3,7 +3,7 @@
   <OverviewBtn class="showOnlyDesktop" />
   <div class="listingCard__large">
     <div class="house__imgWrapper">
-      <img :src="listingById(listingId).picture" />
+      <img :src="listingById(listingId).picture" alt="picture of a house" />
     </div>
     <div class="mobile__wrapper showOnlyMobile">
       <div>
@@ -217,6 +217,12 @@ export default {
 
 .listingCard__edit img {
   height: 15px;
+  transition-duration: 300ms;
+}
+
+.listingCard__edit img:hover {
+  transform: scale(1.2);
+  cursor: pointer;
 }
 
 .listingCard__edit {
@@ -239,6 +245,10 @@ export default {
 
 .listing__favorite--button[data-fav="true"] {
   background-color: #c3c3c3;
+}
+.listing__favorite--button:hover {
+  transform: scale(1.04);
+  cursor: pointer;
 }
 
 /* favorited icon*/

@@ -356,6 +356,10 @@ input[type="text"]:focus {
   right: -15px;
 }
 
+.uploadedPhotoX:hover {
+  cursor: pointer;
+}
+
 .uploadFileWrapper input[type="file"] {
   height: 200px;
   position: absolute;
@@ -424,6 +428,10 @@ button {
   width: 150px;
   border-radius: 5px;
   margin-bottom: 20px;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 input:invalid ~ button {

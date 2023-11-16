@@ -6,7 +6,7 @@
       :to="{ name: 'byListing', params: { listingId: listingId } }"
     >
       <div class="imgWrapper">
-        <img :src="picture" />
+        <img :src="picture" alt="picture of a house" />
       </div>
       <div class="listingCard__information">
         <div class="listingCard__header">
@@ -135,6 +135,11 @@ export default {
   margin: 0px 0px 7px 0px;
 }
 
+.listingCard--address h2 {
+  font-size: 22px;
+  font-weight: bold;
+}
+
 .listingCard--address {
   font-size: 16px;
 }
@@ -179,10 +184,18 @@ export default {
   height: 15px;
   right: 0px;
   top: 0px;
-  transition-duration: 300ms;
+  transition-duration: 150ms;
 }
 
 .listingCard__edit img:hover {
   transform: scale(1.2);
+  cursor: pointer;
+}
+
+/*mobile styles*/
+@media (max-width: 750px) {
+  .listingCard--address h2 {
+    font-size: 22px;
+  }
 }
 </style>

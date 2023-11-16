@@ -21,7 +21,7 @@ export default {
   align-items: center;
   font-family: Montserrat;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 16px;
   transition-duration: 300ms;
 }
 

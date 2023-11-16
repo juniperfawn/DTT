@@ -290,6 +290,7 @@ input {
   border-radius: 5px;
   padding: 10px;
   outline: none;
+  font-size: 14px;
 }
 
 input[placeholder] {
@@ -337,6 +338,10 @@ input[type="text"]:focus {
   position: absolute;
   top: -15px;
   right: -15px;
+}
+
+.uploadedPhotoX:hover {
+  cursor: pointer;
 }
 
 .uploadFileWrapper input[type="file"] {
@@ -415,6 +420,10 @@ button {
   width: 150px;
   border-radius: 5px;
   margin-bottom: 20px;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 input:invalid ~ button {

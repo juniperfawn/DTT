@@ -12,7 +12,6 @@
 </template>
 
 <script>
-//adding a comment for testing purposes
 import { mapActions } from "vuex";
 export default {
   name: "SearchBarExtra",
@@ -50,6 +49,7 @@ button {
 button:hover {
   transform: scale(1.04);
   opacity: 100%;
+  cursor: pointer;
 }
 
 /*mobile styles*/
