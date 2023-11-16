@@ -1,7 +1,7 @@
 # Dtt Assignment
 
 Implimentation of design based off screen sizes (ideal sized for inspect dev tools): <br>
-[DESKTOP VIEW](https://overflow.io/s/SQY91U3K/?node=a1b1f199): 1920xp <br>
+[DESKTOP VIEW](https://overflow.io/s/SQY91U3K/?node=a1b1f199) <br>
 [MOBILE VIEW](https://overflow.io/s/SQY91U3K/?node=08a536d0): 414px <br>
 
 API KEY: eZAMbHDt3QsdXruE-qUlyKYGxif5J9kN
